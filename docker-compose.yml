@@ -1,7 +1,7 @@
 version: "3.7"
 services:
 
-  frontend:
+  frontend-console:
     image: nexpose-console:latest
     build:
       context: nexpose-console/

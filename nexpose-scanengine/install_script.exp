@@ -16,7 +16,7 @@ if {$force_conservative} {
                 exp_send -s -- $arg
         }
 }
-set timeout -1
+set timeout 30
 
 spawn /opt/Rapid7Setup-Linux64.bin
 match_max 100000
@@ -35,11 +35,14 @@ send -- "/opt/rapid7/nexpose\r"
 expect "already exists. Would you like to install to that directory anyway?"
 send -- "y\r"
 
-expect "Minimum requirements met. Select \"Yes\" to continue, \"No\" to cancel installation.\r"
+expect "Minimum requirements met. Select \"Yes\" to continue, \"No\" to cancel installation."
 send -- "y\r"
 
-expect "Pair this engine to the Insight Platform?\r"
+expect "Pair this engine to the Insight Platform?"
 send -- "n\r"
+
+expect "Failed to pair engine to platform"
+send -- "s\r"
 
 expect "First name:"
 send -- "$FIRSTNAME\r"
@@ -50,8 +53,7 @@ send -- "$LASTNAME\r"
 expect "Company:"
 send -- "$COMPANY\r"
 
-expect "Initialize and start after installation?"
-send -- "n\r"
+set timeout -1
 
 expect "Installation is complete!"
 send -- "\r"
