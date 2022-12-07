@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+
+  backend-database:
+    image: nexpose-scanengine:latest
+    build:
+      dockerfile: Dockerfile
+    networks:
+      - back-tier
+#    volumes:
+#    # The ScanEngine persistent data volumes
+#      - nexpose-nsc-nxpgsql:/opt/rapid7/nexpose/nsc/nxpgsql
+
+#volumes:
+#  # The ScanEngine persistent data volumes
+#  nexpose-nsc-nxpgsql:
+
+networks:
+  # The presence of these objects is sufficient to define them
+  front-tier: {}
+  back-tier: {}

@@ -1,0 +1,63 @@
+version: "3.7"
+services:
+
+  frontend:
+    image: nexpose-console:latest
+    build:
+      dockerfile: Dockerfile
+#    depends_on:
+#      - backend-postgres
+    ports:
+      - "3780:3780"
+    networks:
+      - nexpose-front-tier
+      - nexpose-back-tier
+    links:
+#      - backend-postgres
+    volumes:
+      - nexpose-nsc-updates:/opt/rapid7/nexpose/updates
+      - nexpose-nsc-plugins:/opt/rapid7/nexpose/plugins
+      - nexpose-nsc-shared:/opt/rapid7/nexpose/shared
+      - nexpose-nsc-conf:/opt/rapid7/nexpose/nsc/conf
+      - nexpose-nsc-keystores:/opt/rapid7/nexpose/nsc/keystores
+      - nexpose-nsc-logs:/opt/rapid7/nexpose/nsc/logs
+      - nexpose-nsc-reports:/opt/rapid7/nexpose/nsc/htroot/reports
+      - nexpose-nsc-nxpgsql:/opt/rapid7/nexpose/nsc/nxpgsql
+      #- nexpose-nsc-nxpdata:/opt/rapid7/nexpose/nsc/nxpgsql/nxpdata
+      - nexpose-nsc-nse:/opt/rapid7/nexpose/nse
+
+#  backend-postgres:
+#    image: postgres:latest
+    #build:
+    #  dockerfile: Dockerfile-database
+    #### PROD ONLY START ####
+    #tty: true
+    #stdin_open: true
+    #### PROD ONLY END ####
+    #ports:
+    #  - "5432:5432"
+#    environment:
+#      - POSTGRES_PASSWORD=test123
+#    restart: always
+#    networks:
+#      - nexpose-back-tier
+
+volumes:
+  nexpose-nsc-updates:
+  nexpose-nsc-plugins:
+  nexpose-nsc-shared:
+  nexpose-nsc-conf:
+  nexpose-nsc-keystores:
+  nexpose-nsc-logs: 
+  nexpose-nsc-reports:
+  nexpose-nsc-nxpgsql:
+  #nexpose-nsc-nxpdata:
+  nexpose-nsc-nse:
+    #driver: flocker
+    #driver_opts:
+    #  size: "5GiB"
+
+networks:
+  # The presence of these objects is sufficient to define them
+  nexpose-front-tier: {}
+  nexpose-back-tier: {}

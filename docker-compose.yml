@@ -1,0 +1,86 @@
+version: "3.7"
+services:
+
+  frontend:
+    image: nexpose-console:latest
+    build:
+      context: nexpose-console/
+      dockerfile: Dockerfile
+#    depends_on:
+#      - backend-postgres
+    ports:
+      - "3780:3780"
+    networks:
+      - nexpose-front-tier
+      - nexpose-back-tier
+    links:
+      - backend-scanengine
+#      - backend-postgres
+    volumes:
+      - nexpose-nsc-updates:/opt/rapid7/nexpose/updates
+      - nexpose-nsc-plugins:/opt/rapid7/nexpose/plugins
+      - nexpose-nsc-shared:/opt/rapid7/nexpose/shared
+      - nexpose-nsc-conf:/opt/rapid7/nexpose/nsc/conf
+      - nexpose-nsc-keystores:/opt/rapid7/nexpose/nsc/keystores
+      - nexpose-nsc-logs:/opt/rapid7/nexpose/nsc/logs
+      - nexpose-nsc-reports:/opt/rapid7/nexpose/nsc/htroot/reports
+      - nexpose-nsc-nxpgsql:/opt/rapid7/nexpose/nsc/nxpgsql
+      #- nexpose-nsc-nxpdata:/opt/rapid7/nexpose/nsc/nxpgsql/nxpdata
+      - nexpose-nsc-nse:/opt/rapid7/nexpose/nse
+
+  backend-scanengine:
+    image: nexpose-scanengine:latest
+    build:
+      context: nexpose-scanengine/
+      dockerfile: Dockerfile
+    networks:
+      - nexpose-back-tier
+    volumes:
+      - nexpose-nse-updates:/opt/rapid7/nexpose/updates
+      - nexpose-nse-plugins:/opt/rapid7/nexpose/plugins
+      - nexpose-nse-shared:/opt/rapid7/nexpose/shared
+      - nexpose-nse-nse:/opt/rapid7/nexpose/nse
+
+#  backend-postgres:
+#    image: postgres:latest
+#    #build:
+#    #  context: nexpose-database/
+#    #  dockerfile: Dockerfile
+#    #### PROD ONLY START ####
+#    #tty: true
+#    #stdin_open: true
+#    #### PROD ONLY END ####
+#    #ports:
+#    #  - "5432:5432"
+#    environment:
+#      - POSTGRES_PASSWORD=test123
+#    restart: always
+#    networks:
+#      - nexpose-back-tier
+
+volumes:
+  # The Consoles persistent data volumes
+  nexpose-nsc-updates:
+  nexpose-nsc-plugins:
+  nexpose-nsc-shared:
+  nexpose-nsc-conf:
+  nexpose-nsc-keystores:
+  nexpose-nsc-logs: 
+  nexpose-nsc-reports:
+  nexpose-nsc-nxpgsql:
+  #nexpose-nsc-nxpdata:
+  nexpose-nsc-nse:
+    #driver: flocker
+    #driver_opts:
+    #  size: "5GiB"
+
+  # The ScanEngine persistent data volumes
+  nexpose-nse-updates:
+  nexpose-nse-plugins:
+  nexpose-nse-shared:
+  nexpose-nse-nse:
+
+networks:
+  # The presence of these objects is sufficient to define them
+  nexpose-front-tier: {}
+  nexpose-back-tier: {}

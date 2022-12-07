@@ -1,0 +1,78 @@
+#!/usr/bin/expect -f
+#
+set FIRSTNAME [lindex $argv 0]
+set LASTNAME [lindex $argv 1]
+set COMPANY [lindex $argv 2]
+set USERNAME [lindex $argv 3]
+set USERPASS [lindex $argv 4]
+
+set force_conservative 0  ;# set to 1 to force conservative mode even if
+                          ;# script wasn't run conservatively originally
+                        
+if {$force_conservative} {
+        set send_slow {1 .1}
+        proc send {ignore arg} {
+                sleep .1
+                exp_send -s -- $arg
+        }
+}
+set timeout -1
+
+spawn /opt/Rapid7Setup-Linux64.bin
+match_max 100000
+expect "Do you want to continue?"
+send -- "y\r"
+
+expect "Select only the set of components you want to install:"
+send -- "2\r"
+
+expect "Communication Direction:"
+send -- "2\r"
+
+expect "Where should Rapid7 Vulnerability Management be installed?"
+send -- "/opt/rapid7/nexpose\r"
+
+expect "The installation can continue, but insufficient drive space will impact\r
+the long-term operation of software as your stored data increases.\r"
+send -- "c\r"
+
+expect "Minimum requirements met. Select \"Yes\" to continue, \"No\" to cancel installation.\r"
+send -- "y\r"
+
+expect "Database port\r
+Enter the number for the port that the database will listen on:\r"
+send -- "5432\r"
+
+expect "First name:"
+send -- "$FIRSTNAME\r"
+
+expect "Last name:"
+send -- "$LASTNAME\r"
+
+expect "Company:"
+send -- "$COMPANY\r"
+
+expect "Credentials: Choose secure credentials and remember them. You will need them\r
+to perform configuration steps after completing the installation.\r
+User name:"
+send -- "$USERNAME\r"
+
+expect "Password:"
+send -- "$USERPASS\r"
+
+expect "Confirm the password:"
+send -- "$USERPASS\r"
+
+expect "Require password reset upon login?"
+send -- "y\r"
+
+expect "WARNING: The provided password does not meet complexity suggestions."
+send -- "i\r"
+
+expect "Initialize and start after installation?"
+send -- "n\r"
+
+expect "Installation is complete!"
+send -- "\r"
+
+expect eof
