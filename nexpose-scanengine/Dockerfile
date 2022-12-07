@@ -12,7 +12,7 @@ COPY install_script.exp /opt/install_script.exp
 RUN chmod +x /opt/install_script.exp
 COPY init_container.sh /opt/init_container.sh
 RUN chmod +x /opt/init_container.sh
-#RUN /opt/install_script.exp John Doe Rapid7 testuser testp@ss
+#RUN /opt/install_script.exp John Doe Rapid7
 
 #RUN rm /opt/install_script.exp
 #RUN rm /opt/Rapid7Setup-Linux64.bin
