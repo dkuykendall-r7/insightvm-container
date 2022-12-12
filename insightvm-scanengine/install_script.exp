@@ -3,8 +3,8 @@
 set FIRSTNAME [lindex $argv 0]
 set LASTNAME [lindex $argv 1]
 set COMPANY [lindex $argv 2]
-set USERNAME [lindex $argv 3]
-set USERPASS [lindex $argv 4]
+
+
 
 set force_conservative 0  ;# set to 1 to force conservative mode even if
                           ;# script wasn't run conservatively originally
@@ -18,7 +18,7 @@ if {$force_conservative} {
 }
 set timeout 30
 
-spawn /opt/Rapid7Setup-Linux64.bin
+spawn /tmp/Rapid7Setup-Linux64.bin
 match_max 100000
 expect "Do you want to continue?"
 send -- "y\r"

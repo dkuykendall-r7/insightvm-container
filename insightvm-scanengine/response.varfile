@@ -1,0 +1,18 @@
+# install4j response file for Rapid7 Vulnerability Management 6.6.80
+communicationDirectionChoice$Integer=1
+company=Rapid7
+dbPort=5432
+engineToPlatformPairingToken=
+firstname=InsightVM Scan Engine
+lastname=Docker Container
+pairEngineToPlatform$Boolean=false
+port=5432
+proxyHost=
+proxyPort=
+sys.adminRights$Boolean=true
+sys.component.engine$Boolean=true
+sys.component.typical$Boolean=false
+sys.installationDir=/opt/rapid7/nexpose
+sys.languageId=en
+sys.programGroupDisabled$Boolean=true
+initService$Boolean=false

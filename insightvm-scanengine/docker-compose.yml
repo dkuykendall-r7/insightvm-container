@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+
+  scanengine:
+    image: insightvm-scanengine:latest
+    build:
+      dockerfile: Dockerfile
+    networks:
+      - insightvm-back-tier
+    volumes:
+      - insightvm-scanengine-data:/opt/rapid7/persistent_data
+
+volumes:
+  insightvm-scanengine-data:
+
+networks:
+  # The presence of these objects is sufficient to define them
+  insightvm-front-tier: {}
+  insightvm-back-tier: {}

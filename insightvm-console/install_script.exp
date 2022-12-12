@@ -18,7 +18,7 @@ if {$force_conservative} {
 }
 set timeout -1
 
-spawn /opt/Rapid7Setup-Linux64.bin
+spawn /tmp/Rapid7Setup-Linux64.bin
 match_max 100000
 expect "Do you want to continue?"
 send -- "y\r"

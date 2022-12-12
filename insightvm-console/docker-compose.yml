@@ -4,7 +4,6 @@ services:
   console:
     image: insightvm-console:latest
     build:
-      context: insightvm-console/
       dockerfile: Dockerfile
 #    depends_on:
 #      - database
@@ -13,22 +12,11 @@ services:
     networks:
       - insightvm-front-tier
       - insightvm-back-tier
-    links:
-      - scanengine
+#    links:
 #      - database
     volumes:
       - insightvm-console-data:/opt/rapid7/persistent_data
       - insightvm-console-database:/opt/rapid7/nexpose/nsc/nxpgsql
-  scanengine:
-    image: insightvm-scanengine:latest
-    build:
-      context: insightvm-scanengine/
-      dockerfile: Dockerfile
-    networks:
-      - insightvm-back-tier
-    volumes:
-      - insightvm-scanengine-data:/opt/rapid7/persistent_data
-
 #  database:
 #    image: postgres:latest
 #    #build:
@@ -49,7 +37,6 @@ services:
 volumes:
   insightvm-console-data:
   insightvm-console-database:
-  insightvm-scanengine-data:
 
 networks:
   # The presence of these objects is sufficient to define them
