@@ -38,7 +38,6 @@ FROM postgres:latest
 RUN apt-get update && apt-get clean
 COPY --from=insightvm-console-installed /opt/rapid7/ /opt/rapid7/
 VOLUME [ "/opt/rapid7/persistent_data", "/opt/rapid7/nexpose/nsc/nxpgsql"]
-RUN adduser --uid 1000 --gecos "NeXpose PostgreSQL User" --home /opt/rapid7/nexpose/nsc/nxpgsql --no-create-home --disabled-password nxpgsql
 EXPOSE 3780/tcp
 WORKDIR /opt
 COPY init_container.sh /opt

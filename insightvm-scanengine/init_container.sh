@@ -3,6 +3,7 @@ DATADIR="/opt/rapid7/persistent_data"
 echo "CONTAINER NOTICE: Checking if this is a first time launch"
 if [ "$(ls -A $DATADIR)" ]; then
     echo "CONTAINER NOTICE: Data in place, continue launching..."
+
 else
     echo "CONTAINER NOTICE: Looks like the first run, will move default data files into place."
     mv /opt/rapid7/default_data/* /opt/rapid7/persistent_data/
