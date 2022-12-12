@@ -1,6 +1,5 @@
 version: "3.7"
 services:
-
   console:
     image: insightvm-console:latest
     build:
@@ -28,7 +27,6 @@ services:
       - insightvm-back-tier
     volumes:
       - insightvm-scanengine-data:/opt/rapid7/persistent_data
-
 #  database:
 #    image: postgres:latest
 #    #build:

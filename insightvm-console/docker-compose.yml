@@ -1,6 +1,5 @@
 version: "3.7"
 services:
-
   console:
     image: insightvm-console:latest
     build:

@@ -1,11 +1,18 @@
 FROM ubuntu:latest as insightvm-starter
-RUN apt-get update && apt-get -y install tmux wget expect screen && apt-get clean
+RUN apt-get update && apt-get -y install tmux wget curl expect screen && apt-get clean
 WORKDIR /tmp
+COPY download_gettimestamp.sh download_updater.sh /tmp/
+RUN chmod +x /tmp/download_gettimestamp.sh /tmp/download_updater.sh
+RUN /tmp/download_gettimestamp.sh
+RUN rm /tmp/download_gettimestamp.sh
 RUN wget -O /tmp/Rapid7Setup-Linux64.bin https://download2.rapid7.com/download/InsightVM/Rapid7Setup-Linux64.bin
 RUN chmod +x /tmp/Rapid7Setup-Linux64.bin
 
 FROM insightvm-starter AS insightvm-scanengine-installed
 WORKDIR /tmp
+# Check if there is an updated installer available (incase the image cache hasnt been cleared)
+RUN /tmp/download_updater.sh
+RUN rm /tmp/download_updater.sh
 # Run the installer using the response file
 COPY response.varfile /tmp
 
