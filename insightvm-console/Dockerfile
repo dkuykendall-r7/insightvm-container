@@ -48,7 +48,6 @@ VOLUME [ "/opt/rapid7/persistent_data", "/opt/rapid7/nexpose/nsc/nxpgsql"]
 EXPOSE 3780/tcp
 WORKDIR /opt
 COPY init_container.sh /opt
-#COPY launcher.sh /opt
-#RUN chmod +x /opt/init_container.sh
+RUN chmod +x /opt/init_container.sh
 ENTRYPOINT ["./init_container.sh"]
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
